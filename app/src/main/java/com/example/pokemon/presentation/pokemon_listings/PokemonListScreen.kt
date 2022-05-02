@@ -21,7 +21,7 @@ fun PokemonListScreen(
     navController: NavController,
     viewModel: PokemonListingViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state
+    var state = viewModel.state
    Surface(
        color = MaterialTheme.colors.background,
        modifier = Modifier.fillMaxSize()
@@ -35,32 +35,16 @@ fun PokemonListScreen(
                     .fillMaxWidth()
                     .align(CenterHorizontally)
                 )
-
-            OutlinedTextField(
-                value = state.searchQuery,
-                onValueChange = {
-                    // viewModel.onEvent(CompanyListingsEvent.OnSearchQueryChange(it))
-                },
+            SearchBar(
                 modifier = Modifier
-                    .padding(16.dp)
                     .fillMaxWidth(),
-                placeholder = {
-                    Text(text = "Search...", color = MaterialTheme.colors.onBackground)
-                },
-                maxLines = 1,
-                singleLine = true,
-                leadingIcon = {
-                    Icon(imageVector = Icons.Filled.Search, contentDescription = "SearchIcon")
-                },
-                trailingIcon = {
-                    IconButton(onClick = {
-                        // viewModel.onEvent(CompanyListingsEvent.TextToSpeech)
-                    }) {
-                        Icon(imageVector = Icons.Filled.Mic, contentDescription = "SearchIcon")
-                    }
+                hint = "Search...",
+                text = state.searchQuery
+            ) {
 
-                }
-            )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            PokemonList(navController = navController)
 
         }
    }
