@@ -8,5 +8,6 @@ data class PokemonListState(
     var searchQuery: String = "",
     var loadError: String = "",
     var endReached: Boolean = false,
-    var isLoading: Boolean = false
+    var isLoading: Boolean = false,
+    var isSearching: Boolean = false
 )

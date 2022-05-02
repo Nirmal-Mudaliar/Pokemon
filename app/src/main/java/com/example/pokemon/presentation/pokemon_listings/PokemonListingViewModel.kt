@@ -6,11 +6,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pokemon.data.remote.PokemonAPI.Companion.PAGE_SIZE
 import com.example.pokemon.domain.models.PokemonListEntry
 import com.example.pokemon.domain.repository.PokemonRepository
 import com.example.pokemon.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -24,15 +26,21 @@ class PokemonListingViewModel @Inject constructor(
 
     var state by mutableStateOf(PokemonListState())
 
+    private var cachedPokemonList = listOf<PokemonListEntry>()
+    private var isSearchStarting = true
+
     init {
         getPokemonListings()
     }
+
+
 
     fun onEvent(event: PokemonListingEvent) {
         when(event) {
             is PokemonListingEvent.onSearchQueryChange -> {
                 state = state.copy(searchQuery = event.query)
-                getPokemonListings()
+                //getPokemonListings()
+                searchPokemonList(state.searchQuery)
             }
         }
     }
@@ -70,6 +78,31 @@ class PokemonListingViewModel @Inject constructor(
 
                 }
             }
+        }
+    }
+
+    fun searchPokemonList(query: String) {
+        val listToSearch = if(isSearchStarting) {
+            state.pokemonsList
+        }else {
+            cachedPokemonList
+        }
+        viewModelScope.launch(Dispatchers.Default) {
+            if (query.isEmpty()) {
+                state.pokemonsList = cachedPokemonList
+                state.isSearching = false
+                isSearchStarting = true
+                return@launch
+            }
+            val results = listToSearch.filter {
+                it.pokemonName.contains(query.trim(), ignoreCase = true) || it.number.toString() == query.trim()
+            }
+            if(isSearchStarting) {
+                cachedPokemonList = state.pokemonsList
+                isSearchStarting = false
+            }
+            state.pokemonsList = results
+            state.isSearching = true
         }
     }
 }

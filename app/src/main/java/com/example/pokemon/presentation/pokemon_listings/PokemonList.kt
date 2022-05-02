@@ -33,7 +33,7 @@ fun PokemonList(
 
         val itemCount = state.pokemonsList.size
         items(itemCount) {
-            if (it >= itemCount-1 && !state.endReached) {
+            if (it >= itemCount-1 && !state.endReached && !state.isLoading && !state.isSearching) {
                 viewModel.getPokemonListings()
             }
            PokemonEntery(entery = state.pokemonsList[it],
