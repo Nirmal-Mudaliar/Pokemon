@@ -68,6 +68,7 @@ fun PokemonEntery(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
