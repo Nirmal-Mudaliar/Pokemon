@@ -2,6 +2,6 @@
 <resources>
 
     <style name="Theme.Pokemon" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">#C34040</item>
+        <item name="android:statusBarColor">#FF0949C9</item>
     </style>
 </resources>

@@ -11,8 +11,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Bottom
+import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
+import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -29,21 +32,24 @@ fun RetrySection(
     onRetry: () -> Unit,
 
 ) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
+
     ){
+
         Image(
-            painterResource(id = R.drawable.network_error),
+            painterResource(id = R.drawable.error),
             contentDescription = "Network error",
-            modifier = Modifier.align(CenterHorizontally))
+            modifier = Modifier.align(TopCenter))
         //Text(text = error, color = Color.Red, fontSize = 16.sp)
-        Spacer(modifier = Modifier.width(8.dp))
+
 
         Button(
             onClick = { onRetry() },
             modifier = Modifier
                 .fillMaxWidth()
+                .align(BottomCenter)
                 .height(78.dp)
                 .padding(16.dp)
                 .clip(RoundedCornerShape(80.dp)),

@@ -9,13 +9,14 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -26,7 +27,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.pokemon.domain.models.PokemonListEntry
-import com.google.accompanist.coil.CoilImage
+
+
 
 @Composable
 fun PokemonEntery(
@@ -36,12 +38,22 @@ fun PokemonEntery(
     viewModel: PokemonListingViewModel = hiltViewModel()
 ) {
     val defaultDominantColor = MaterialTheme.colors.surface
+    var dominantColor by remember {
+        mutableStateOf(defaultDominantColor)
+    }
     Box(contentAlignment = Alignment.Center,
         modifier = Modifier
             .shadow(5.dp, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
             .aspectRatio(1f)
-            .background(defaultDominantColor)
+            .background(
+                Brush.verticalGradient(
+                    listOf(
+                        dominantColor,
+                        defaultDominantColor
+                    )
+                )
+            )
             .clickable {
                 navController.navigate(
                     "pokemon_detail_screen/${defaultDominantColor.toArgb()}/${entery.pokemonName}"
@@ -54,8 +66,11 @@ fun PokemonEntery(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(entery.url)
 //                    .target {
-//                        //defaultDominantColor
+//                        viewModel.calcDominantColor(it) { color ->
+//                            dominantColor = color
+//                        }
 //                    }
+                    .crossfade(true)
                     .build(),
                 contentDescription = entery.pokemonName,
                 modifier = Modifier

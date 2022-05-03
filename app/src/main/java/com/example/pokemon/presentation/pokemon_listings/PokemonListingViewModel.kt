@@ -1,12 +1,17 @@
 package com.example.pokemon.presentation.pokemon_listings
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.palette.graphics.Palette
 import com.example.pokemon.data.remote.PokemonAPI.Companion.PAGE_SIZE
 import com.example.pokemon.domain.models.PokemonListEntry
 import com.example.pokemon.domain.repository.PokemonRepository
@@ -103,6 +108,16 @@ class PokemonListingViewModel @Inject constructor(
             }
             state.pokemonsList = results
             state.isSearching = true
+        }
+    }
+
+    fun calcDominantColor(drawable: Drawable, onFinish: (Color) -> Unit) {
+        val bmp = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+
+        Palette.from(bmp).generate { palette ->
+            palette?.dominantSwatch?.rgb?.let { colorValue ->
+                onFinish(Color(colorValue))
+            }
         }
     }
 }
