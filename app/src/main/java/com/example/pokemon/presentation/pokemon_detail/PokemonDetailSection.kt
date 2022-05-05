@@ -40,7 +40,7 @@ fun PokemonDetailSection(
         )
         PokemonTypeSection(types = pokemonInfo.types)
         PokemonDetailDataSection(pokemonWeight = pokemonInfo.weight, pokemonHeight = pokemonInfo.height)
-
+        PokemonBaseStat(pokemonInfo = pokemonInfo)
 
     }
 }

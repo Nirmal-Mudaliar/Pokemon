@@ -36,10 +36,10 @@ fun parseStatToColor(stat: Stat): Color {
         "hp" -> HPColor
         "attack" -> AtkColor
         "defense" -> DefColor
-        "special_attack" -> SpAtkColor
-        "special_defense" -> SpDefColor
+        "special-attack" -> SpAtkColor
+        "special-defense" -> SpDefColor
         "speed" -> SpdColor
-        else -> Color.White
+        else -> Color.Red
     }
 }
 
@@ -48,8 +48,8 @@ fun parseStatToAbbr(stat: Stat): String {
         "hp" -> "HP"
         "attack" -> "Atk"
         "defense" -> "Def"
-        "special_attack" -> "SpAtk"
-        "special_defense" -> "SpDef"
+        "special-attack" -> "SpAtk"
+        "special-defense" -> "SpDef"
         "speed" -> "Spd"
         else -> ""
     }

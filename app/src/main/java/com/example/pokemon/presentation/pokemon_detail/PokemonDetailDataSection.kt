@@ -37,7 +37,7 @@ fun PokemonDetailDataSection(
                 .weight(1f)
         )
         Spacer(modifier = Modifier
-            .size(1.dp)
+            .size(2.dp)
             .background(Color.LightGray)
         )
         PokemonDetailDataItem(
@@ -47,5 +47,6 @@ fun PokemonDetailDataSection(
             modifier = Modifier
                 .weight(1f)
         )
+
     }
 }
