@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -22,16 +23,17 @@ fun PokemonDetailTopSection(
     modifier: Modifier = Modifier
 ) {
     Box(
-        contentAlignment = Alignment.TopCenter,
+        contentAlignment = Alignment.TopStart,
         modifier = Modifier
             .background(
-            Brush.verticalGradient(
-                listOf(Color.Black, Color.Transparent)
-            )
+                MaterialTheme.colors.surface
+//            Brush.verticalGradient(
+//                listOf(Color.Black, Color.Transparent)
+//            )
         )
     ) {
         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null,
-        tint = Color.Red,
+        tint = Color.Black,
         modifier = Modifier.size(36.dp)
             .offset(16.dp, 16.dp)
             .clickable { navController.popBackStack()
